@@ -4,33 +4,36 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@ResponseBody
+@RequestMapping("hello")
 public class HelloController {
 
-    // Handles requests at path /hello
+    // Handles requests at path /hello1
     @GetMapping("hello1")
-    @ResponseBody
+
     public String hello() {
         return "Hello, Spring!";
     }
 
+    // lives at /hello/goodbye
     @GetMapping("goodbye")
-    @ResponseBody
+
     public String goodbye() {
         return "Goodbye, Spring!";
     }
 
     // Dynamic handler handles requests of the for /hello?name=LaunchCode
+    //lives at /hello?name=LaunchCode
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "hello")
-    @ResponseBody
     public String helloWithQueryParam(@RequestParam String name) {
         return "Hello, " + name + "!";
     }
 
     //handler that handles requests of the form /hello/LaunchCode (path parameter)
 
-    @GetMapping("hello/{name}")
-    @ResponseBody
+    @GetMapping("{name}")
+
     public String helloWithPathParameter(@PathVariable String name){
         return "Hello, " + name + "!";
 
@@ -38,7 +41,7 @@ public class HelloController {
 
     //display form
     //@GetMapping("form")
-    //@ResponseBody
+
     //public String helloForm(){
        // return "<html>" +
          //       "<body>" +
@@ -51,8 +54,9 @@ public class HelloController {
    // }
 
     //display form using post
+    //lives at hello/form
     @GetMapping("form")
-    @ResponseBody
+
     public String helloForm(){
         return "<html>" +
                 "<body>" +
